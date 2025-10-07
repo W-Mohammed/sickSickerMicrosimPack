@@ -9,6 +9,8 @@
 [![R-CMD-check](https://github.com/W-Mohammed/sickSickerMicrosimPack/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/W-Mohammed/sickSickerMicrosimPack/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/W-Mohammed/sickSickerMicrosimPack/graph/badge.svg)](https://app.codecov.io/gh/W-Mohammed/sickSickerMicrosimPack)
+[![Lifecycle:
+stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 <!-- badges: end -->
 
 `sickSickerMicrosimPack` provides a set of functions to build and run a
@@ -180,9 +182,9 @@ res <- run_microSimV(
 )
 
 res$mean_costs
-#> [1] 14496.84
+#> [1] 14552.97
 res$mean_qalys
-#> [1] 5.139279
+#> [1] 5.143042
 ```
 
 Refer to the documentation of individual functions for further details
