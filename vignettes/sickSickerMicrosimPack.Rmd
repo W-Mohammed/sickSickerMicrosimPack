@@ -1,0 +1,146 @@
+---
+title: "Healthy–Sick–Sicker Microsimulation"
+author: "Wael Mohammed"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+bibliography: '`r system.file("bibliography/references.bib", package="sickSickerMicrosimPack")`'
+# optional but nice:
+link-citations: true
+# optional citation style (pick any CSL file you like)
+# csl: `r system.file("bibliography/apa.csl", package="sickSickerMicrosimPack")`'
+vignette: >
+  %\VignetteIndexEntry{Healthy–Sick–Sicker–Dead Microsimulation}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r}
+library(sickSickerMicrosimPack)
+```
+# Introduction
+
+This vignette illustrates how to use the functions provided by the `sickSickerMicrosimPack` package to simulate a cohort of individuals progressing through a four–state health model. The health states include **Healthy (H)**, **Sick (S1)**, **Sicker (S2)** and **Dead (D)**.
+Transition probabilities can depend on the time spent in a state as well as on individual covariates such as age and sex. Costs and utilities are accumulated each cycle and may be discounted.
+
+For more detailed guidance on creating R packages, refer to the online version of the second edition of the *R Packages* book [@wickham2023] and the Posit package development cheatsheet. These resources provide comprehensive overviews of best practices in packaging, documentation, testing and continuous integration.
+
+# Plotting the model diagram
+
+The following diagram summarises the order of operations within the simulation from the specification of inputs through to summarising discounted results.
+
+```{r diagram, fig.height=6, fig.width=8, echo=FALSE}
+
+DiagrammeR::grViz("
+  digraph flowchart {
+    node [fontname = 'Helvetica', shape = box, style=filled, fillcolor='grey', fontsize=16]
+    edge [fontname = 'Helvetica']
+
+    input [shape = box, label = 'Inputs: v_starting_states, num_i, num_cycles, m_indi_features, v_states_names, v_states_costs, v_cost_coeffs, v_states_utilities, v_util_coeffs, v_util_t_decs, l_trans_probs, cycle_length, starting_seed', style=filled, fillcolor='yellow', width=3.5]
+    initialize_matrices [label = 'Initialize m_States, m_Costs, m_Effs', style=filled, fillcolor='palegreen']
+    calc_initial_costs [label = 'Set seed, get starting health state, and calculate initial costs and QALYs', style=filled, fillcolor='palegreen']
+    loop_cycles [shape = diamond, style=filled, fillcolor='skyblue', fontsize=24, fontname='Helvetica-Bold', label = 'For each cycle t']
+    update_probs [label = 'Update transition probabilities for cycle (t)', style=filled, fillcolor='palegreen']
+    sample_state [label = 'Sample health state for cycle (t + 1)', style=filled, fillcolor='palegreen']
+    calculate_cycle_costs [label = 'Calculate payoffs (costs and QALYs) for cycle (t + 1)', style=filled, fillcolor='palegreen']
+    update_time [label = 'Update time in state for cycle (t + 1)', style=filled, fillcolor='palegreen']
+    update_age [label = 'Advance age if alive for cycle (t + 1)', style=filled, fillcolor='palegreen']
+    check_cycles [label = 'Was this the last cycle?', shape = diamond, style=filled, fillcolor='skyblue', fontsize=24, fontname='Helvetica-Bold']
+    summarize_results [label = 'Discount and summarize costs and QALYs', style=filled, fillcolor='palegreen']
+    return_results [shape = ellipse, label = 'Return results', style=filled, fillcolor='yellow']
+
+    input -> initialize_matrices
+    initialize_matrices -> calc_initial_costs
+    calc_initial_costs -> loop_cycles
+    loop_cycles -> update_probs
+    update_probs -> sample_state
+    sample_state ->  update_time -> update_age -> calculate_cycle_costs
+    calculate_cycle_costs -> check_cycles
+    check_cycles -> loop_cycles [label = 'No\nNext cycle']
+    check_cycles -> summarize_results [label = 'Yes']
+    summarize_results -> return_results
+  }
+")
+```
+
+# Transition probability matrix
+
+At each cycle the transition probabilities are updated for every individual using the `update_probsV()` function. The example below constructs a simple vector of occupied states and times and then computes the corresponding transition matrix.
+
+```{r transition-matrix}
+v_states_names <- c("H", "S1", "S2", "D")
+v_occupied_state <- c("H", "S1", "S2", "D")
+v_time_in_state <- c(1,2,3,1)
+l_trans_probs <- list(
+  p_HD = 0.005,
+  p_HS1 = 0.15,
+  p_S1H = 0.5,
+  p_S1S2 = 0.105,
+  p_S1D = 1 - exp(-3 * (-log(1-0.005))),
+  p_S2D = 1 - exp(-10 * (-log(1-0.005))),
+  rp_S1 = 0.2,
+  rp_S2 = 0.29
+)
+
+m_probs <- update_probsV(
+  v_states_names = v_states_names, 
+  v_occupied_state = v_occupied_state,
+  l_trans_probs = l_trans_probs,
+  v_time_in_state = v_time_in_state
+)
+
+knitr::kable(
+  x = m_probs,
+  caption = "Transition probabilities for a four‑individual cohort"
+)
+```
+
+# Running a small simulation
+
+The following code runs a small simulation for ten individuals over five cycles. Individual characteristics are sampled and passed to `run_microSimV()` together with cost and utility parameters. The average total costs and QALYs per individual are returned.
+
+```{r simulation-example}
+set.seed(123)
+num_i <- 10
+num_cycles <- 5
+v_start <- rep("H", num_i)
+m_feats <- cbind(age = rnorm(num_i, 50, 3), sex = sample(c(0,1), num_i, replace = TRUE))
+v_states_costs <- c(H = 2000, S1 = 4000, S2 = 15000, D = 0)
+v_cost_coeffs  <- c(age = 11.5, sex = 300)
+v_states_utilities <- c(H = 1, S1 = 0.75, S2 = 0.5, D = 0)
+v_util_coeffs <- c(age = -0.0018, sex = -0.015)
+v_util_t_decs <- c(S1 = -0.0015, S2 = -0.0020)
+l_trans_probs <- list(p_HD = 0.005, p_HS1 = 0.15, p_S1H = 0.5,
+                      p_S1S2 = 0.105, p_S1D = 0.01488751,
+                      p_S2D = 0.04877166, rp_S1 = 0.2, rp_S2 = 0.29)
+res <- run_microSimV(
+  v_starting_states = v_start,
+  num_i = num_i,
+  num_cycles = num_cycles,
+  m_indi_features = m_feats,
+  v_states_names = v_states_names,
+  v_states_costs = v_states_costs,
+  v_cost_coeffs = v_cost_coeffs,
+  v_states_utilities = v_states_utilities,
+  v_util_coeffs = v_util_coeffs,
+  v_util_t_decs = v_util_t_decs,
+  l_trans_probs = l_trans_probs,
+  discount_rate_costs = 0.03,
+  discount_rate_QALYs = 0.015,
+  cycle_length = 1,
+  starting_seed = 1
+)
+
+res$mean_costs
+res$mean_qalys
+```
+
+The methodology behind this package and its application to cost–effectiveness modelling is described in detail in our tutorial on packaging cost‑effectiveness models in R [@smith2023packaging].
+
+# References

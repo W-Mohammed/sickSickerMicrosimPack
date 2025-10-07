@@ -1,0 +1,10 @@
+^data-raw/
+^sickSickerMicrosimPack\.tar\.gz$
+^\.git/
+^vignettes/references\.bib$
+^.*\.Rproj$
+^\.Rproj\.user$
+^LICENSE\.md$
+^doc$
+^Meta$
+^data-raw$

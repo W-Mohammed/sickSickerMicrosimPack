@@ -1,0 +1,28 @@
+Package: sickSickerMicrosimPack
+Title: Healthy–Sick–Sicker–Dead Microsimulation Model
+Version: 0.2.0
+Authors@R: 
+    c(person("Wael", "Mohammed", , "wmohammed@darkpeakanalytics.com", role = c("aut", "cre", "cph"),
+           comment = c(ORCID = "0000-0003-0370-4903")))
+Description: Provides a set of functions to run a four‑state microsimulation.
+    The model follows individuals through the health states Healthy (H), Sick (S1),
+    Sicker (S2) and Dead (D). Transition probabilities may depend on the time
+    spent in a state and on individual covariates such as age and sex. Costs and
+    utilities are calculated at each cycle and aggregated with optional discounting.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+LazyDataCompression: xz
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Imports: stats
+Suggests: 
+    DiagrammeR,
+    rmarkdown,
+    knitr,
+    testthat (>= 3.0.0)
+VignetteBuilder: knitr
+Depends: 
+    R (>= 3.5)
+URL: https://github.com/W-Mohammed/sickSickerMicrosimPack
+BugReports: https://github.com/W-Mohammed/sickSickerMicrosimPack/issues
