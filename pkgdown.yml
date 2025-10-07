@@ -3,7 +3,7 @@ pkgdown: 2.1.3
 pkgdown_sha: ~
 articles:
   sickSickerMicrosimPack: sickSickerMicrosimPack.html
-last_built: 2025-10-07T20:34Z
+last_built: 2025-10-07T20:58Z
 urls:
   reference: https://w-mohammed.github.io/sickSickerMicrosimPack/reference
   article: https://w-mohammed.github.io/sickSickerMicrosimPack/articles
