@@ -45,7 +45,7 @@ multiplied by costs or QALYs to obtain discounted values.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">calc_discount_wts</span><span class="op">(</span><span class="va">discount_rate</span>, <span class="va">num_cycles</span>, <span class="va">cycle_length</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">calc_discount_wts</span><span class="op">(</span><span class="va">discount_rate</span>, <span class="va">num_cycles</span>, <span class="va">cycle_length</span>, assert <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -58,11 +58,17 @@ multiplied by costs or QALYs to obtain discounted values.</p>
 
 
 <dt id="arg-num-cycles">num_cycles<a class="anchor" aria-label="anchor" href="#arg-num-cycles"></a></dt>
-<dd><p>Integer giving the number of cycles in the simulation.</p></dd>
+<dd><p>Integer giving the number of cycles to simulate.</p></dd>
 
 
 <dt id="arg-cycle-length">cycle_length<a class="anchor" aria-label="anchor" href="#arg-cycle-length"></a></dt>
-<dd><p>Length of each cycle in years.</p></dd>
+<dd><p>Numeric. Length of each cycle in years. Defaults to 1.</p></dd>
+
+
+<dt id="arg-assert">assert<a class="anchor" aria-label="anchor" href="#arg-assert"></a></dt>
+<dd><p>Logical. Boolean for whether to run full assertion of
+inputs. This feature is useful when running probabilistic sensitivity
+analysis (PSA).</p></dd>
 
 </dl></div>
     <div class="section level2">

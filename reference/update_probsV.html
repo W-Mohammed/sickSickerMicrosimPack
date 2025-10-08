@@ -51,7 +51,13 @@ has one row per individual and one column for each possible next state.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">update_probsV</span><span class="op">(</span><span class="va">v_states_names</span>, <span class="va">v_occupied_state</span>, <span class="va">l_trans_probs</span>, <span class="va">v_time_in_state</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">update_probsV</span><span class="op">(</span></span>
+<span>  <span class="va">v_states_names</span>,</span>
+<span>  <span class="va">v_occupied_state</span>,</span>
+<span>  <span class="va">l_trans_probs</span>,</span>
+<span>  <span class="va">v_time_in_state</span>,</span>
+<span>  assert <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -59,23 +65,29 @@ has one row per individual and one column for each possible next state.</p>
 
 
 <dl><dt id="arg-v-states-names">v_states_names<a class="anchor" aria-label="anchor" href="#arg-v-states-names"></a></dt>
-<dd><p>Character vector of all possible health states.</p></dd>
+<dd><p>Character vector of all state names in the order used
+throughout the model.</p></dd>
 
 
 <dt id="arg-v-occupied-state">v_occupied_state<a class="anchor" aria-label="anchor" href="#arg-v-occupied-state"></a></dt>
-<dd><p>Character vector giving the current state for each
+<dd><p>Character vector of current state for each
 individual.</p></dd>
 
 
 <dt id="arg-l-trans-probs">l_trans_probs<a class="anchor" aria-label="anchor" href="#arg-l-trans-probs"></a></dt>
-<dd><p>A named list containing baseline transition
-probabilities (<code>p_HD</code>, <code>p_HS1</code>, <code>p_S1H</code>, <code>p_S1S2</code>, <code>p_S1D</code>, <code>p_S2D</code>) and rate
-ratios (<code>rp_S1</code>, <code>rp_S2</code>) used to update mortality probabilities.</p></dd>
+<dd><p>Named list of transition probabilities and rate ratios;
+see <code>update_probsV</code> for details.</p></dd>
 
 
 <dt id="arg-v-time-in-state">v_time_in_state<a class="anchor" aria-label="anchor" href="#arg-v-time-in-state"></a></dt>
-<dd><p>Numeric vector indicating the time each individual has
-spent in their current state. Must be the same length as <code>v_occupied_state</code>.</p></dd>
+<dd><p>Numeric vector indicating the time spent in the
+current state.</p></dd>
+
+
+<dt id="arg-assert">assert<a class="anchor" aria-label="anchor" href="#arg-assert"></a></dt>
+<dd><p>Logical. Boolean for whether to run full assertion of
+inputs. This feature is useful when running probabilistic sensitivity
+analysis (PSA).</p></dd>
 
 </dl></div>
     <div class="section level2">

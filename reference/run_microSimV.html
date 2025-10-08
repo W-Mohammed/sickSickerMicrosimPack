@@ -66,7 +66,8 @@ optionally discounted.</p>
 <span>  <span class="va">discount_rate_costs</span>,</span>
 <span>  <span class="va">discount_rate_QALYs</span>,</span>
 <span>  cycle_length <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  starting_seed <span class="op">=</span> <span class="fl">1</span></span>
+<span>  starting_seed <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  assert <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -126,20 +127,26 @@ see <code>update_probsV</code> for details.</p></dd>
 
 
 <dt id="arg-discount-rate-costs">discount_rate_costs<a class="anchor" aria-label="anchor" href="#arg-discount-rate-costs"></a></dt>
-<dd><p>Annual discount rate used for costs.</p></dd>
+<dd><p>Numeric. Annual discount rate used for costs.</p></dd>
 
 
 <dt id="arg-discount-rate-qalys">discount_rate_QALYs<a class="anchor" aria-label="anchor" href="#arg-discount-rate-qalys"></a></dt>
-<dd><p>Annual discount rate used for QALYs.</p></dd>
+<dd><p>Numeric. Annual discount rate used for QALYs.</p></dd>
 
 
 <dt id="arg-cycle-length">cycle_length<a class="anchor" aria-label="anchor" href="#arg-cycle-length"></a></dt>
-<dd><p>Length of each cycle in years. Defaults to 1.</p></dd>
+<dd><p>Numeric. Length of each cycle in years. Defaults to 1.</p></dd>
 
 
 <dt id="arg-starting-seed">starting_seed<a class="anchor" aria-label="anchor" href="#arg-starting-seed"></a></dt>
-<dd><p>Optional seed for the random number generator to allow
-reproducible results.</p></dd>
+<dd><p>Numeric. Optional seed for the random number generator
+to allow reproducible results.</p></dd>
+
+
+<dt id="arg-assert">assert<a class="anchor" aria-label="anchor" href="#arg-assert"></a></dt>
+<dd><p>Logical. Boolean for whether to run full assertion of
+inputs. This feature is useful when running probabilistic sensitivity
+analysis (PSA).</p></dd>
 
 </dl></div>
     <div class="section level2">

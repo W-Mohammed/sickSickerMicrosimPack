@@ -48,7 +48,7 @@ probabilities to determine the next state.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">sampleV</span><span class="op">(</span><span class="va">m_trans_probs</span>, <span class="va">v_states_names</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">sampleV</span><span class="op">(</span><span class="va">m_trans_probs</span>, <span class="va">v_states_names</span>, assert <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -61,8 +61,14 @@ corresponding to individuals and columns to states.</p></dd>
 
 
 <dt id="arg-v-states-names">v_states_names<a class="anchor" aria-label="anchor" href="#arg-v-states-names"></a></dt>
-<dd><p>Character vector of state names matching the
-column order of <code>m_trans_probs</code>.</p></dd>
+<dd><p>Character vector of all state names in the order used
+throughout the model.</p></dd>
+
+
+<dt id="arg-assert">assert<a class="anchor" aria-label="anchor" href="#arg-assert"></a></dt>
+<dd><p>Logical. Boolean for whether to run full assertion of
+inputs. This feature is useful when running probabilistic sensitivity
+analysis (PSA).</p></dd>
 
 </dl></div>
     <div class="section level2">

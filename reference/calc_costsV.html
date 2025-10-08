@@ -56,7 +56,7 @@ to the individual features (e.g. age, sex).</p>
 
 
 <dl><dt id="arg-v-occupied-state">v_occupied_state<a class="anchor" aria-label="anchor" href="#arg-v-occupied-state"></a></dt>
-<dd><p>Character vector of the current state for each
+<dd><p>Character vector of current state for each
 individual.</p></dd>
 
 
@@ -65,14 +65,13 @@ individual.</p></dd>
 
 
 <dt id="arg-m-indi-features">m_indi_features<a class="anchor" aria-label="anchor" href="#arg-m-indi-features"></a></dt>
-<dd><p>Matrix or data.frame of individual covariates; the
-number of rows must match <code>v_occupied_state</code>.</p></dd>
+<dd><p>Matrix or data.frame of individual covariates with
+rows corresponding to individuals and columns corresponding to features.
+Must include a column named <code>age</code> which is incremented each cycle.</p></dd>
 
 
 <dt id="arg-v-cost-coeffs">v_cost_coeffs<a class="anchor" aria-label="anchor" href="#arg-v-cost-coeffs"></a></dt>
-<dd><p>Numeric vector of regression coefficients for the
-individual covariates used to calculate additional costs in states S1 and
-S2.</p></dd>
+<dd><p>Numeric vector of regression coefficients for costs.</p></dd>
 
 </dl></div>
     <div class="section level2">

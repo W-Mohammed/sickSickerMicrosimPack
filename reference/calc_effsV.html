@@ -52,7 +52,8 @@ covariate coefficients and by the time spent in the state.</p>
 <span>  <span class="va">v_util_coeffs</span>,</span>
 <span>  <span class="va">v_util_t_decs</span>,</span>
 <span>  <span class="va">v_time_in_state</span>,</span>
-<span>  cycle_length <span class="op">=</span> <span class="fl">1</span></span>
+<span>  cycle_length <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  assert <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -71,17 +72,18 @@ state.</p></dd>
 
 
 <dt id="arg-m-indi-features">m_indi_features<a class="anchor" aria-label="anchor" href="#arg-m-indi-features"></a></dt>
-<dd><p>Matrix or data.frame of individual covariates.</p></dd>
+<dd><p>Matrix or data.frame of individual covariates with
+rows corresponding to individuals and columns corresponding to features.
+Must include a column named <code>age</code> which is incremented each cycle.</p></dd>
 
 
 <dt id="arg-v-util-coeffs">v_util_coeffs<a class="anchor" aria-label="anchor" href="#arg-v-util-coeffs"></a></dt>
-<dd><p>Numeric vector of regression coefficients for the
-individual covariates used to calculate utility decrements.</p></dd>
+<dd><p>Numeric vector of regression coefficients for utilities.</p></dd>
 
 
 <dt id="arg-v-util-t-decs">v_util_t_decs<a class="anchor" aria-label="anchor" href="#arg-v-util-t-decs"></a></dt>
 <dd><p>Named numeric vector of time‑dependent utility
-decrements for states S1 and S2. The names must correspond to state names.</p></dd>
+decrements for states S1 and S2.</p></dd>
 
 
 <dt id="arg-v-time-in-state">v_time_in_state<a class="anchor" aria-label="anchor" href="#arg-v-time-in-state"></a></dt>
@@ -90,7 +92,13 @@ current state.</p></dd>
 
 
 <dt id="arg-cycle-length">cycle_length<a class="anchor" aria-label="anchor" href="#arg-cycle-length"></a></dt>
-<dd><p>Length of one cycle measured in years. Defaults to 1.</p></dd>
+<dd><p>Numeric. Length of each cycle in years. Defaults to 1.</p></dd>
+
+
+<dt id="arg-assert">assert<a class="anchor" aria-label="anchor" href="#arg-assert"></a></dt>
+<dd><p>Logical. Boolean for whether to run full assertion of
+inputs. This feature is useful when running probabilistic sensitivity
+analysis (PSA).</p></dd>
 
 </dl></div>
     <div class="section level2">
