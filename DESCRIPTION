@@ -26,5 +26,5 @@ Suggests:
 VignetteBuilder: knitr
 Depends: 
     R (>= 3.5)
-URL: https://github.com/W-Mohammed/sickSickerMicrosimPack, https://w-mohammed.github.io/sickSickerMicrosimPack/
-BugReports: https://github.com/W-Mohammed/sickSickerMicrosimPack/issues
+URL: https://github.com/dark-peak-analytics/sickSickerMicrosimPack, https://dark-peak-analytics.github.io/sickSickerMicrosimPack/
+BugReports: https://github.com/dark-peak-analytics/sickSickerMicrosimPack/issues
