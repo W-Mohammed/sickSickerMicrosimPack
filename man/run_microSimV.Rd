@@ -19,7 +19,8 @@ run_microSimV(
   discount_rate_costs,
   discount_rate_QALYs,
   cycle_length = 1,
-  starting_seed = 1
+  starting_seed = 1,
+  assert = TRUE
 )
 }
 \arguments{
@@ -52,14 +53,18 @@ decrements for states S1 and S2.}
 \item{l_trans_probs}{Named list of transition probabilities and rate ratios;
 see \code{update_probsV} for details.}
 
-\item{discount_rate_costs}{Annual discount rate used for costs.}
+\item{discount_rate_costs}{Numeric. Annual discount rate used for costs.}
 
-\item{discount_rate_QALYs}{Annual discount rate used for QALYs.}
+\item{discount_rate_QALYs}{Numeric. Annual discount rate used for QALYs.}
 
-\item{cycle_length}{Length of each cycle in years. Defaults to 1.}
+\item{cycle_length}{Numeric. Length of each cycle in years. Defaults to 1.}
 
-\item{starting_seed}{Optional seed for the random number generator to allow
-reproducible results.}
+\item{starting_seed}{Numeric. Optional seed for the random number generator
+to allow reproducible results.}
+
+\item{assert}{Logical. Boolean for whether to run full assertion of
+inputs. This feature is useful when running probabilistic sensitivity
+analysis (PSA).}
 }
 \value{
 A list containing the matrices of states, costs and QALYs by cycle,

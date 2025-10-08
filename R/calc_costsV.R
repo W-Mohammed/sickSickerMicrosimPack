@@ -5,14 +5,8 @@
 #' states S1 and S2 can be modified by regression coefficients applied
 #' to the individual features (e.g. age, sex).
 #'
-#' @param v_occupied_state Character vector of the current state for each
-#' individual.
-#' @param v_states_costs Named numeric vector of base costs for each state.
-#' @param m_indi_features Matrix or data.frame of individual covariates; the
-#'   number of rows must match `v_occupied_state`.
-#' @param v_cost_coeffs Numeric vector of regression coefficients for the
-#'   individual covariates used to calculate additional costs in states S1 and
-#'   S2.
+#' @inheritParams run_microSimV
+#' @inheritParams calc_effsV
 #'
 #' @return A numeric vector of costs for the current cycle for each individual.
 #'
@@ -35,6 +29,16 @@ calc_costsV <- function(
     v_states_costs,
     m_indi_features,
     v_cost_coeffs) {
+  
+  # Assertions
+  assertthat::assert_that(is.character(v_occupied_state))
+  assertthat::assert_that(is.numeric(v_states_costs))
+  assertthat::assert_that(
+    assertthat::has_name(x = v_states_costs, which = c("H", "S1", "S2", "D"))
+  )
+  assertthat::assert_that(is.matrix(m_indi_features))
+  assertthat::assert_that(nrow(m_indi_features) == length(v_occupied_state))
+  assertthat::assert_that(is.numeric(v_cost_coeffs))
   
   # calculate individual-specific costs based on costs regression coefficients
   v_indi_costs <- m_indi_features %*% v_cost_coeffs

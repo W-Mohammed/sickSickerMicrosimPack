@@ -11,7 +11,8 @@ calc_effsV(
   v_util_coeffs,
   v_util_t_decs,
   v_time_in_state,
-  cycle_length = 1
+  cycle_length = 1,
+  assert = TRUE
 )
 }
 \arguments{
@@ -21,18 +22,23 @@ individual.}
 \item{v_states_utilities}{Named numeric vector of base utilities for each
 state.}
 
-\item{m_indi_features}{Matrix or data.frame of individual covariates.}
+\item{m_indi_features}{Matrix or data.frame of individual covariates with
+rows corresponding to individuals and columns corresponding to features.
+Must include a column named \code{age} which is incremented each cycle.}
 
-\item{v_util_coeffs}{Numeric vector of regression coefficients for the
-individual covariates used to calculate utility decrements.}
+\item{v_util_coeffs}{Numeric vector of regression coefficients for utilities.}
 
 \item{v_util_t_decs}{Named numeric vector of time‑dependent utility
-decrements for states S1 and S2. The names must correspond to state names.}
+decrements for states S1 and S2.}
 
 \item{v_time_in_state}{Numeric vector indicating the time spent in the
 current state.}
 
-\item{cycle_length}{Length of one cycle measured in years. Defaults to 1.}
+\item{cycle_length}{Numeric. Length of each cycle in years. Defaults to 1.}
+
+\item{assert}{Logical. Boolean for whether to run full assertion of
+inputs. This feature is useful when running probabilistic sensitivity
+analysis (PSA).}
 }
 \value{
 A numeric vector of QALYs for each individual over the cycle.

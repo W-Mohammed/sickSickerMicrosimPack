@@ -7,17 +7,16 @@
 calc_costsV(v_occupied_state, v_states_costs, m_indi_features, v_cost_coeffs)
 }
 \arguments{
-\item{v_occupied_state}{Character vector of the current state for each
+\item{v_occupied_state}{Character vector of current state for each
 individual.}
 
 \item{v_states_costs}{Named numeric vector of base costs for each state.}
 
-\item{m_indi_features}{Matrix or data.frame of individual covariates; the
-number of rows must match \code{v_occupied_state}.}
+\item{m_indi_features}{Matrix or data.frame of individual covariates with
+rows corresponding to individuals and columns corresponding to features.
+Must include a column named \code{age} which is incremented each cycle.}
 
-\item{v_cost_coeffs}{Numeric vector of regression coefficients for the
-individual covariates used to calculate additional costs in states S1 and
-S2.}
+\item{v_cost_coeffs}{Numeric vector of regression coefficients for costs.}
 }
 \value{
 A numeric vector of costs for the current cycle for each individual.

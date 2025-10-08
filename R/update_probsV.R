@@ -6,18 +6,12 @@
 #' for mortality using rate ratios and time in state. The resulting matrix
 #' has one row per individual and one column for each possible next state.
 #'
-#' @param v_states_names Character vector of all possible health states.
-#' @param v_occupied_state Character vector giving the current state for each
-#' individual.
-#' @param l_trans_probs A named list containing baseline transition
-#' probabilities (`p_HD`, `p_HS1`, `p_S1H`, `p_S1S2`, `p_S1D`, `p_S2D`) and rate
-#' ratios (`rp_S1`, `rp_S2`) used to update mortality probabilities.
-#' @param v_time_in_state Numeric vector indicating the time each individual has
-#' spent in their current state. Must be the same length as `v_occupied_state`.
+#' @inheritParams run_microSimV
+#' @inheritParams calc_effsV
 #'
 #' @return A matrix of transition probabilities with rows corresponding to
-#'   individuals and columns corresponding to the health states listed in
-#'   `v_states_names`. Each row sums to one.
+#' individuals and columns corresponding to the health states listed in
+#' `v_states_names`. Each row sums to one.
 #'
 #' @examples
 #' v_states_names <- c("H", "S1", "S2", "D")
@@ -47,8 +41,18 @@ update_probsV <- function(
     v_states_names,
     v_occupied_state,
     l_trans_probs,
-    v_time_in_state) {
+    v_time_in_state,
+    assert = TRUE) {
 
+  # Assertions
+  if(isTRUE(assert)) {
+    assertthat::assert_that(is.character(v_states_names))
+    assertthat::assert_that(is.character(v_occupied_state))
+    assertthat::assert_that(is.list(l_trans_probs))
+    assertthat::assert_that(is.numeric(v_time_in_state))
+    assertthat::assert_that(length(v_occupied_state) == length(v_time_in_state))
+  }
+  
   with(
     data = l_trans_probs,
     expr = {

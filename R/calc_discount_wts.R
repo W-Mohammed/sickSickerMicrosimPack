@@ -6,8 +6,7 @@
 #'
 #' @param discount_rate Annual discount rate expressed as a fraction 
 #' (e.g. 0.03).
-#' @param num_cycles Integer giving the number of cycles in the simulation.
-#' @param cycle_length Length of each cycle in years.
+#' @inheritParams run_microSimV
 #'
 #' @return A numeric vector of discount weights of length `num_cycles + 1`.
 #'
@@ -22,7 +21,15 @@
 calc_discount_wts <- function(
     discount_rate,
     num_cycles,
-    cycle_length) {
+    cycle_length,
+    assert = TRUE) {
+  
+  # Assertions
+  if(isTRUE(assert)) {
+    assertthat::assert_that(assertthat::is.number(discount_rate))
+    assertthat::assert_that(assertthat::is.count(num_cycles))
+    assertthat::assert_that(assertthat::is.number(cycle_length))
+  }
   
   # calculate discount weights based on the number & length (in years) of cycles
   v_discount_wts <- 1 / (1 + discount_rate) ^ ((0:num_cycles) * cycle_length)

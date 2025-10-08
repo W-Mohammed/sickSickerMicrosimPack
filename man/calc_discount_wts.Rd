@@ -4,15 +4,19 @@
 \alias{calc_discount_wts}
 \title{Calculate Discount Weights}
 \usage{
-calc_discount_wts(discount_rate, num_cycles, cycle_length)
+calc_discount_wts(discount_rate, num_cycles, cycle_length, assert = TRUE)
 }
 \arguments{
 \item{discount_rate}{Annual discount rate expressed as a fraction
 (e.g. 0.03).}
 
-\item{num_cycles}{Integer giving the number of cycles in the simulation.}
+\item{num_cycles}{Integer giving the number of cycles to simulate.}
 
-\item{cycle_length}{Length of each cycle in years.}
+\item{cycle_length}{Numeric. Length of each cycle in years. Defaults to 1.}
+
+\item{assert}{Logical. Boolean for whether to run full assertion of
+inputs. This feature is useful when running probabilistic sensitivity
+analysis (PSA).}
 }
 \value{
 A numeric vector of discount weights of length \code{num_cycles + 1}.

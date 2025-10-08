@@ -4,20 +4,30 @@
 \alias{update_probsV}
 \title{Update Transition Probabilities}
 \usage{
-update_probsV(v_states_names, v_occupied_state, l_trans_probs, v_time_in_state)
+update_probsV(
+  v_states_names,
+  v_occupied_state,
+  l_trans_probs,
+  v_time_in_state,
+  assert = TRUE
+)
 }
 \arguments{
-\item{v_states_names}{Character vector of all possible health states.}
+\item{v_states_names}{Character vector of all state names in the order used
+throughout the model.}
 
-\item{v_occupied_state}{Character vector giving the current state for each
+\item{v_occupied_state}{Character vector of current state for each
 individual.}
 
-\item{l_trans_probs}{A named list containing baseline transition
-probabilities (\code{p_HD}, \code{p_HS1}, \code{p_S1H}, \code{p_S1S2}, \code{p_S1D}, \code{p_S2D}) and rate
-ratios (\code{rp_S1}, \code{rp_S2}) used to update mortality probabilities.}
+\item{l_trans_probs}{Named list of transition probabilities and rate ratios;
+see \code{update_probsV} for details.}
 
-\item{v_time_in_state}{Numeric vector indicating the time each individual has
-spent in their current state. Must be the same length as \code{v_occupied_state}.}
+\item{v_time_in_state}{Numeric vector indicating the time spent in the
+current state.}
+
+\item{assert}{Logical. Boolean for whether to run full assertion of
+inputs. This feature is useful when running probabilistic sensitivity
+analysis (PSA).}
 }
 \value{
 A matrix of transition probabilities with rows corresponding to

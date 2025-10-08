@@ -24,11 +24,14 @@
 #' decrements for states S1 and S2.
 #' @param l_trans_probs Named list of transition probabilities and rate ratios;
 #' see `update_probsV` for details.
-#' @param discount_rate_costs Annual discount rate used for costs.
-#' @param discount_rate_QALYs Annual discount rate used for QALYs.
-#' @param cycle_length Length of each cycle in years. Defaults to 1.
-#' @param starting_seed Optional seed for the random number generator to allow
-#' reproducible results.
+#' @param discount_rate_costs Numeric. Annual discount rate used for costs.
+#' @param discount_rate_QALYs Numeric. Annual discount rate used for QALYs.
+#' @param cycle_length Numeric. Length of each cycle in years. Defaults to 1.
+#' @param starting_seed Numeric. Optional seed for the random number generator
+#' to allow reproducible results.
+#' @param assert Logical. Boolean for whether to run full assertion of
+#' inputs. This feature is useful when running probabilistic sensitivity 
+#' analysis (PSA).
 #'
 #' @return A list containing the matrices of states, costs and QALYs by cycle,
 #' undiscounted and discounted totals per individual and averages across
@@ -72,8 +75,28 @@ run_microSimV <- function(
     discount_rate_costs,
     discount_rate_QALYs,
     cycle_length = 1,
-    starting_seed = 1) {
-
+    starting_seed = 1,
+    assert = TRUE) {
+  
+  # Assertions
+  assertthat::assert_that(is.matrix(m_indi_features))
+  assertthat::assert_that(is.numeric(v_states_costs))
+  assertthat::assert_that(is.numeric(v_cost_coeffs))
+  assertthat::assert_that(is.numeric(v_states_utilities))
+  assertthat::assert_that(is.numeric(v_util_coeffs))
+  assertthat::assert_that(is.numeric(v_util_t_decs))
+  if(isTRUE(assert)) {
+    assertthat::assert_that(is.character(v_starting_states))
+    assertthat::assert_that(assertthat::is.count(num_i))
+    assertthat::assert_that(assertthat::is.count(num_cycles))
+    assertthat::assert_that(is.character(v_states_names))
+    assertthat::assert_that(is.list(l_trans_probs))
+    assertthat::assert_that(assertthat::is.number(discount_rate_costs))
+    assertthat::assert_that(assertthat::is.number(discount_rate_QALYs))
+    assertthat::assert_that(assertthat::is.number(cycle_length))
+    assertthat::assert_that(assertthat::is.number(starting_seed))
+  }
+  
   # Allocate result matrices
   m_States <- m_Costs <- m_Effs <- matrix(
     nrow = num_i,

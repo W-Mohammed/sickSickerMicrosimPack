@@ -6,16 +6,9 @@
 #'
 #' @param v_occupied_state Character vector of current state for each
 #' individual.
-#' @param v_states_utilities Named numeric vector of base utilities for each
-#' state.
-#' @param m_indi_features Matrix or data.frame of individual covariates.
-#' @param v_util_coeffs Numeric vector of regression coefficients for the
-#' individual covariates used to calculate utility decrements.
-#' @param v_util_t_decs Named numeric vector of time‑dependent utility 
-#' decrements for states S1 and S2. The names must correspond to state names.
 #' @param v_time_in_state Numeric vector indicating the time spent in the
 #' current state.
-#' @param cycle_length Length of one cycle measured in years. Defaults to 1.
+#' @inheritParams run_microSimV
 #'
 #' @return A numeric vector of QALYs for each individual over the cycle.
 #'
@@ -44,7 +37,27 @@ calc_effsV <- function (
     v_util_coeffs,
     v_util_t_decs,
     v_time_in_state,
-    cycle_length = 1) {
+    cycle_length = 1,
+    assert = TRUE) {
+  
+  # Assertions
+  if(isTRUE(assert)) {
+    assertthat::assert_that(is.character(v_occupied_state))
+    assertthat::assert_that(is.numeric(v_states_utilities))
+    assertthat::assert_that(
+      assertthat::has_name(
+        x = v_states_utilities, which = c("H", "S1", "S2", "D")
+      )
+    )
+    assertthat::assert_that(is.matrix(m_indi_features))
+    assertthat::assert_that(nrow(m_indi_features) == length(v_occupied_state))
+    assertthat::assert_that(is.numeric(v_util_coeffs))
+    assertthat::assert_that(is.numeric(v_util_t_decs))
+    assertthat::assert_that(assertthat::has_name(v_util_t_decs, c("S1", "S2")))
+    assertthat::assert_that(is.numeric(v_time_in_state))
+    assertthat::assert_that(length(v_time_in_state) == length(v_occupied_state))
+    assertthat::assert_that(assertthat::is.number(cycle_length))
+  }
   
   # calculate individual-specific utility decrements using utilities reg coeffs
   v_ind_decrement <- (m_indi_features %*% v_util_coeffs)[,1]

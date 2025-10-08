@@ -4,14 +4,18 @@
 \alias{sampleV}
 \title{Sample Health States}
 \usage{
-sampleV(m_trans_probs, v_states_names)
+sampleV(m_trans_probs, v_states_names, assert = TRUE)
 }
 \arguments{
 \item{m_trans_probs}{A matrix of transition probabilities with rows
 corresponding to individuals and columns to states.}
 
-\item{v_states_names}{Character vector of state names matching the
-column order of \code{m_trans_probs}.}
+\item{v_states_names}{Character vector of all state names in the order used
+throughout the model.}
+
+\item{assert}{Logical. Boolean for whether to run full assertion of
+inputs. This feature is useful when running probabilistic sensitivity
+analysis (PSA).}
 }
 \value{
 A character vector of the sampled next state for each row of

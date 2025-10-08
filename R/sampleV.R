@@ -7,8 +7,7 @@
 #'
 #' @param m_trans_probs A matrix of transition probabilities with rows
 #' corresponding to individuals and columns to states.
-#' @param v_states_names Character vector of state names matching the
-#' column order of `m_trans_probs`.
+#' @inheritParams run_microSimV
 #'
 #' @return A character vector of the sampled next state for each row of
 #' `m_trans_probs`.
@@ -28,7 +27,15 @@
 #' @export
 sampleV <- function(
     m_trans_probs,
-    v_states_names) {
+    v_states_names,
+    assert = TRUE) {
+  
+  # Assertions
+  if(isTRUE(assert)) {
+    assertthat::assert_that(is.matrix(m_trans_probs))
+    assertthat::assert_that(is.character(v_states_names))
+    assertthat::assert_that(ncol(m_trans_probs) == length(v_states_names))
+  }
   
   # create an upper triangular matrix of ones
   m_upper_tri <- upper.tri(
